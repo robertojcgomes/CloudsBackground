@@ -1,7 +1,6 @@
 import * as THREE from 'three';
         
 import Stats from 'three/addons/libs/stats.module.js';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
 import { EXRLoader } from 'three/addons/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -10,8 +9,8 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 let canvas, bgTexture, logoEnvMap, renderer, stats;
 let glassMaterial, iridescenceMetal, iridescenceGlass, img1, img2, img3;
 
-let bgScene, bgCamera, bgRenderer;
-let ambient, light1, light2, light3, cloudParticles = [];
+let bgScene, bgCamera, bgRenderer, composer, bgCanvas;
+let ambient, light1, light2, light3, cloudParticles = [], views = [];
 
 const scenes = [];
 
@@ -31,8 +30,6 @@ init();
 animate();
 
 function init() {
-
-    canvas = document.getElementById('c');
 
     stats = new Stats();
     statsContainer.appendChild(stats.dom);
@@ -174,16 +171,6 @@ function init() {
         });
     }
 
-    bgRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    bgRenderer.setPixelRatio((window.devicePixelRatio));
-    bgRenderer.setSize(window.innerWidth, window.innerHeight);
-    bgRenderer.autoClear = false;
-    bgRenderer.setClearColor(0x000000, 0.0);
-    bgRenderer.outputEncoding = THREE.sRGBEncoding;
-
-    const background = document.getElementById('background');
-    background.appendChild(bgRenderer.domElement);
-
     // Card scenes
     for (let i = 1; i < 7; i++) {
 
@@ -238,10 +225,20 @@ function init() {
         scenes.push(scene);
     }
 
+    canvas = document.getElementById('c');
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setClearColor(0xffffff, 0);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.outputEncoding = THREE.sRGBEncoding;
+    
+    bgCanvas = document.getElementById('background');
+    bgRenderer = new THREE.WebGLRenderer({ canvas: bgCanvas, antialias: true, alpha: true });
+    bgRenderer.setClearColor(0xffffff, 0);
+    bgRenderer.setPixelRatio((window.devicePixelRatio));
+    bgRenderer.outputEncoding = THREE.sRGBEncoding;
+
+    views.push(bgCanvas);
+    views.push(canvas);
 }
 
 function updateSize() {
@@ -253,12 +250,6 @@ function updateSize() {
     bgRenderer.setSize(window.innerWidth, window.innerHeight);
     
     renderer.setSize(width, height, false);
-}
-
-function onWindowResize() {
-    bgCamera.aspect = window.innerWidth / window.innerHeight;
-    bgCamera.updateProjectionMatrix();
-    bgRenderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function animate() {
