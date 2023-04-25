@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#background {
+    background: #11e8bb; /* Old browsers */
+    background: -moz-linear-gradient(top,  #00ccff 0%, #9bffff 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #00ccff 0%,#9bffff 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #00ccff 0%,#9bffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ccff', endColorstr='#9bffff',GradientType=0 ); /* IE6-9 */    
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body {
+    background-color: #000000;
+    color: white;
+    font-family: Sans-Serif;
+}
+
+h2 {
+    text-transform: uppercase;
+    padding-top: 12pt;
+}
+
+#content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 0 0 0 0;
+}
+
+#c {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.element {
+    border: 5px outset cyan;
+    position: relative;
+    height: 690px;
+    text-align: center;
+}
+
+.odd {
+    border: 5px outset cyan;
+    /*background-color: rgba(0, 255, 255, 0.25);*/
+}
+
+.even {
+    border: 5px outset magenta;
+    /*background-color: rgba(255, 0, 255, 0.25);*/
+}
