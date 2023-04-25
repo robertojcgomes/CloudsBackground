@@ -6,13 +6,11 @@ import { EXRLoader } from 'three/addons/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
-let canvas, bgTexture, logoEnvMap, renderer, stats;
-let glassMaterial, iridescenceMetal, iridescenceGlass, img1, img2, img3;
+let canvas, bgTexture, renderer, stats, scenes = [];
+let iridescenceMetal, img1, img2, img3;
 
-let bgScene, bgCamera, bgRenderer, composer, bgCanvas;
-let ambient, light1, light2, light3, cloudParticles = [], views = [];
-
-const scenes = [];
+let bgScene, bgCamera, bgRenderer, bgCanvas;
+let ambient, light1, light2, light3, cloudParticles = [];
 
 const params = {
     animate: true,
@@ -40,10 +38,6 @@ function init() {
         texture.mapping = THREE.EquirectangularReflectionMapping;
     });
 
-    logoEnvMap = new EXRLoader().load('examples/textures/cloudy_sky3.exr', function (texture) {
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-    });
-
     img1 = new THREE.TextureLoader().load('examples/textures/cerveau.jpg');
     img1.encoding = THREE.sRGBEncoding;
     img2 = new THREE.TextureLoader().load('examples/textures/audermars.png');
@@ -52,47 +46,16 @@ function init() {
     img3.encoding = THREE.sRGBEncoding;
 
     const imgs = [img1,img2,img3,img1,img2,img3];
-
-    // Glass Material
-    glassMaterial = new THREE.MeshPhysicalMaterial({
-        envMap: logoEnvMap,
-        transparent: true,
-        color: 0xffffff,
-        transmission: 1,
-        opacity: 1,
-        metalness: 0.2,
-        roughness: 0,
-        thickness: 0.2,
-        iridescence: 0
-    });
+    
     // Iridescence Metal
     iridescenceMetal = new THREE.MeshPhysicalMaterial({
         envMap: bgTexture,
-        //envMap: logoEnvMap,			
-        //reflectivity: 1.2,
         roughness: 0.1,
         metalness: 0.98,
         emissive: 0,
         iridescence: 1,
         iridescenceIOR: 1.94,
         iridescenceThicknessRange: [100, 400]
-    });
-    // Iridescence Glass
-    iridescenceGlass = new THREE.MeshPhysicalMaterial({
-        envMap: logoEnvMap,
-        reflectivity: 1.2,
-        roughness: 0,
-        metalness: 1,
-        iridescence: 1,
-        transmission: 0.7,
-        thickness: 40,
-        opacity: 1,
-        transparent: true,
-        side: THREE.DoubleSide,
-        emissive: 1,
-        iridescenceIOR: 1.94,
-        iridescenceThicknessRange: [100, 400],
-        //forceSinglePass: true
     });
 
     // Background scene
@@ -204,7 +167,6 @@ function init() {
 
                 displayCase = gltf.scene;
                 displayCase.getObjectByName('DisplayCase_1').material = iridescenceMetal;
-                //displayCase.getObjectByName('DisplayCase_3').material = glassMaterial;
 
                 card = displayCase.getObjectByName('DisplayCase_2');
                 card.material.emissiveMap = imgs[i-1];
@@ -236,9 +198,6 @@ function init() {
     bgRenderer.setClearColor(0xffffff, 0);
     bgRenderer.setPixelRatio((window.devicePixelRatio));
     bgRenderer.outputEncoding = THREE.sRGBEncoding;
-
-    views.push(bgCanvas);
-    views.push(canvas);
 }
 
 function updateSize() {
