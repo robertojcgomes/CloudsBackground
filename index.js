@@ -69,11 +69,8 @@ function init() {
     bgCamera.position.set( 0, 100, 1000 );
 
     //Lights
-    letThereBeLight();
-    function letThereBeLight() {
-        ambient = new THREE.AmbientLight(params.ambientColor);
-        bgScene.add(ambient);
-    }
+    ambient = new THREE.AmbientLight(params.ambientColor);
+    bgScene.add(ambient);
 
     //Clouds
     let cloudGroup1 = new THREE.Group();
