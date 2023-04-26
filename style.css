@@ -3,12 +3,18 @@
     padding: 0;
 }
 
+body {
+    background-color: rgb(255, 0, 255);
+    font-family: Sans-Serif;
+    color: white;
+}
+
 #background {
     background: #11e8bb; /* Old browsers */
-    background: -moz-linear-gradient(top,  #00ccff 0%, #9bffff 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  #00ccff 0%,#9bffff 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  #00ccff 0%,#9bffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ccff', endColorstr='#9bffff',GradientType=0 ); /* IE6-9 */    
+    background: -moz-linear-gradient(top,  #6ce2ff 0%,#6b97ff 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #6ce2ff 0%,#6b97ff 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #6ce2ff 0%,#6b97ff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6ce2ff', endColorstr='#6b97ff',GradientType=0 ); /* IE6-9 */    
 
     position: fixed;
     top: 0;
@@ -17,12 +23,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-body {
-    background-color: #000000;
-    color: white;
-    font-family: Sans-Serif;
 }
 
 h2 {
@@ -37,7 +37,7 @@ h2 {
     padding: 0 0 0 0;
 }
 
-#c {
+#canvas {
     z-index: 1;
     position: absolute;
     left: 0;
